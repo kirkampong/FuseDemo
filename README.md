@@ -8,6 +8,6 @@ To run this app locally:
 
 1) Download this repo
 2) Run 'yarn start' in your terminal
-3) Scan the Barcode in your iphone camera 
+3) Scan the Barcode with your phone camera to launch the app in Expo Go 
 
 
