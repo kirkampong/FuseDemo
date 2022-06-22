@@ -15,7 +15,7 @@ const baseUrl = 'https://yfapi.net';
 const region = 'US';
 const balance = '$7,540.00';
 
-export default function TabOneScreen({ navigation }){
+export default function HomeScreen({ navigation }){
   const [trendingStocks, setTrendingStocks] = useState([]);
   const [portfolioTickers, setPortfolioTickers] = useState([]);
   const [portfolioTickerData, setPortfolioTickerData] = useState([]);
