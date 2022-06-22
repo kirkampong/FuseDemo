@@ -7,5 +7,5 @@ To run this app locally:
 3) Scan the Barcode in your iphone camera 
 
 Prerequisites:
-Install yarn locally 
-Install the 'ExpoGo' app on your mobile phone
+1) Install yarn locally 
+2) Install the 'ExpoGo' app on your mobile phone
