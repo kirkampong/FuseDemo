@@ -7,30 +7,29 @@ import { Dimensions } from "react-native";
 import DateRangePicker from '../components/DateRangePicker';
 
 export default function StatisticScreen({ route, navigation }) {
-  const { chartData } = route.params;
-  const val = {
-    "ACT Symbol": "APPL",
-    "Company Name": "Apple, Inc."
-  }
+  const { ticker, tickerData } = route.params;
 
-  
+  const previousClose = tickerData[0].chartPreviousClose;
+  const latestHigh = tickerData[0].high[tickerData[0].high.length - 1];
+  const latestLow = tickerData[0].low[tickerData[0].low.length - 1]
+  const percentChange = (((latestHigh - previousClose)/(previousClose)) * 100).toFixed(2);
 
   const TickerDetail = () => {
     return(
       <View style={{marginTop:'7%',backgroundColor: '#18181c'}}>
-        <HStack key={val["ACT Symbol"]} space={3} justifyContent="left">
-          <Box alignItems="center" key={val["ACT Symbol"]} bg="gray.600" rounded="xl" size="20" mb="3"
+        <HStack key={ticker["ACT Symbol"]} space={3} justifyContent="left">
+          <Box alignItems="center" key={ticker["ACT Symbol"]} bg="gray.600" rounded="xl" size="20" mb="3"
           _text={{fontSize: "lg",fontWeight: "bold",color: "warmGray.50",margin: 'auto',}}>
-            {val["ACT Symbol"][0]}
+            {ticker["ACT Symbol"][0]}
           </Box>
           <VStack justifyContent="center" space={6} paddingBottom='3'>
-            <Text>{val["ACT Symbol"]}</Text>
-            <Text style={styles.secondaryColor}>{val["Company Name"].substring(0, 20)}</Text>
+            <Text>{ticker["ACT Symbol"]}</Text>
+            <Text style={styles.secondaryColor}>{ticker["Company Name"].substring(0, 20)}</Text>
           </VStack>
           <View style={{flex: 1,backgroundColor: '#18181c',}}></View>
           <VStack justifyContent="center" space={6} paddingBottom='3'>
-            <Text style={[styles.tickerData,{textAlign:'right'}]}>$34000.24</Text>
-            <Text style={[styles.tickerData,{textAlign:'right', color:'green'}]}>+0.81%</Text>
+            <Text style={[styles.tickerData,{textAlign:'right'}]}>${latestHigh}</Text>
+            <Text style={[styles.tickerData,{textAlign:'right', color:'green'}]}>{percentChange}%</Text>
           </VStack>
         </HStack>
       </View>
@@ -43,17 +42,17 @@ export default function StatisticScreen({ route, navigation }) {
         <HStack space={3} justifyContent="center" marginBottom="2">
           <Text style={styles.secondary}>Daily Change</Text>
           <View style={{flex: 1,backgroundColor: '#18181c',}}></View>
-          <Text style={[styles.tickerData, {color: 'green'}]}>4,09%</Text>
+          <Text style={[styles.tickerData, {color: 'green'}]}>{percentChange}%</Text>
         </HStack>
         <HStack space={3} justifyContent="center" marginBottom="2">
           <Text style={styles.secondary}>High Price</Text>
           <View style={{flex: 1,backgroundColor: '#18181c',}}></View>
-          <Text style={styles.tickerData}>$8,560.00</Text>
+          <Text style={styles.tickerData}>${latestHigh}</Text>
         </HStack>
         <HStack space={3} justifyContent="center" marginBottom="2">
           <Text style={styles.secondary}>Low Price</Text>
           <View style={{flex: 1,backgroundColor: '#18181c',}}></View>
-          <Text style={styles.tickerData}>$1560.00</Text>
+          <Text style={styles.tickerData}>${latestLow}</Text>
         </HStack>
       </View>
     );
@@ -67,16 +66,7 @@ export default function StatisticScreen({ route, navigation }) {
             labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun','Mon'],
             datasets: [
               {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                ],
+                data: tickerData[0].high.slice(-8),
               },
             ],
           }}
