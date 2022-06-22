@@ -29,6 +29,9 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "flipperHack": "React Native packager is running"
     }
   }
 }

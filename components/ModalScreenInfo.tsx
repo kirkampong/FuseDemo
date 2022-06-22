@@ -5,7 +5,7 @@ import Colors from '../constants/Colors';
 import { MonoText } from './StyledText';
 import { Text, View } from './Themed';
 
-export default function EditScreenInfo({ path }: { path: string }) {
+export default function ModalScreenInfo() {
   return (
     <View>
       <View style={styles.getStartedContainer}>
@@ -13,38 +13,52 @@ export default function EditScreenInfo({ path }: { path: string }) {
           style={styles.getStartedText}
           lightColor="rgba(0,0,0,0.8)"
           darkColor="rgba(255,255,255,0.8)">
-          Open up the code for this screen:
+          This app was built using react native:
         </Text>
 
         <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
           darkColor="rgba(255,255,255,0.05)"
           lightColor="rgba(0,0,0,0.05)">
-          <MonoText>{path}</MonoText>
+          <TouchableOpacity onPress={handleDocsPress}>
+            <MonoText>https://reactnative.dev/</MonoText>
+          </TouchableOpacity>
         </View>
 
         <Text
           style={styles.getStartedText}
           lightColor="rgba(0,0,0,0.8)"
           darkColor="rgba(255,255,255,0.8)">
-          Change any of the text, save the file, and your app will automatically update.
+          Click on a ticker symbol in the "Trending" or "My Portfolio" sections to view its stock chart.
         </Text>
       </View>
 
       <View style={styles.helpContainer}>
-        <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-          <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-            Tap here if your app doesn't automatically update after making changes
+        <TouchableOpacity onPress={handleRepoPress} style={styles.repoLink}>
+          <Text style={styles.repoLinkText} lightColor={Colors.light.tint}>
+            Click here to view the github repo for this demo
           </Text>
         </TouchableOpacity>
+
+        <Text
+          style={styles.getStartedText}
+          lightColor="rgba(0,0,0,0.8)"
+          darkColor="rgba(255,255,255,0.8)">
+          Drag down to close this modal.
+        </Text>
       </View>
     </View>
   );
 }
 
-function handleHelpPress() {
+function handleRepoPress() {
   WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet'
+    'https://github.com/kirkampong/FuseDemo'
+  );
+}
+
+function handleDocsPress() {
+  WebBrowser.openBrowserAsync(
+    'https://reactnative.dev'
   );
 }
 
@@ -53,27 +67,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 50,
   },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightContainer: {
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
   getStartedText: {
-    fontSize: 17,
+    fontSize: 14,
     lineHeight: 24,
     textAlign: 'center',
+    marginTop: 20
   },
   helpContainer: {
     marginTop: 15,
     marginHorizontal: 20,
     alignItems: 'center',
   },
-  helpLink: {
+  repoLink: {
     paddingVertical: 15,
   },
-  helpLinkText: {
+  repoLinkText: {
     textAlign: 'center',
   },
 });
