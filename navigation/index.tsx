@@ -39,7 +39,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Root" component={TabOneScreen} />
+      <Stack.Screen name="Home" component={TabOneScreen} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="Statistic" component={StatisticScreen} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>

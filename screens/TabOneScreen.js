@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Box, HStack, Pressable, VStack, Center, Divider } from 'native-base';
 import {Ionicons, FontAwesome, MaterialIcons,MaterialCommunityIcons} from '@expo/vector-icons';
 import { tickerDataSample } from '../data/tickerDataSample';
+import WalletView from '../components/WalletView';
 
 import axios from 'axios';
 const nyseData = require('./../data/nyse.json');
@@ -14,8 +15,8 @@ const baseUrl = 'https://yfapi.net';
 const region = 'US';
 const balance = '$7,540.00';
 
-export default function TabOneScreen({ navigation }){ //}: RootTabScreenProps<'TabOne'>) {
-  const [trendingStocks, setTrendingStocks] = useState([]); //<any[]>([]);
+export default function TabOneScreen({ navigation }){
+  const [trendingStocks, setTrendingStocks] = useState([]);
   const [portfolioTickers, setPortfolioTickers] = useState([]);
   const [portfolioTickerData, setPortfolioTickerData] = useState([]);
   const [trendingTickerData, setTrendingTickerData] = useState([]);
@@ -46,17 +47,18 @@ export default function TabOneScreen({ navigation }){ //}: RootTabScreenProps<'T
         'interval': '1d',
         'range': '1mo',
       }
-    });
+    }).catch(function (error) {
+      console.log(error)
+    ;});
 
     // Yahoo finance API returns a max of 5 tickers per API call
-    const comp = response.data.chart.result[0]; 
+    const comparisonData = response.data.chart.result[0].comparisons; 
     setTrendingTickerData(tickerDataSample);
   };
 
   const fetchPortfolioTickerData = async () => {
     // Shuffle nyseData
     const shuffled = nyseData.sort(() => 0.5 - Math.random());
-    // Get sub-array of first 50 elements after shuffled
     const selected = shuffled.slice(0, 50);
     setPortfolioTickers(selected)
     
@@ -74,11 +76,11 @@ export default function TabOneScreen({ navigation }){ //}: RootTabScreenProps<'T
         'interval': '1d',
         'range': '1mo',
       }
-    });
+    }).catch(function (error) {
+      console.log(error)
+    ;});
     
     // Yahoo finance API returns a max of 5 tickers for comparison
-
-    const timestamp = response.data.chart.result[0].timestamp;
     const comp = response.data.chart.result[0].comparisons;
     setPortfolioTickerData(tickerDataSample);
   }
@@ -106,30 +108,6 @@ export default function TabOneScreen({ navigation }){ //}: RootTabScreenProps<'T
     fetchTrendingTickerData();
     fetchPortfolioTickerData();
   }, []);
-
-  const WalletView = () => {
-    return (
-      <View style={styles.wallet}>
-        <HStack>
-          <Text style={styles.secondary}>Current Balance</Text>
-          <View style={{flex:1, backgroundColor: '#18181c'}}></View>
-          <HStack space={4} marginTop='4%'>
-            <MaterialCommunityIcons name="line-scan" size={24} color="white" />
-            <Ionicons name="notifications-outline" size={24} color="white" />
-          </HStack>
-        </HStack>
-        <HStack space={2}>
-          <Text style={styles.balance}>{balance}</Text>
-          <Box backgroundColor='#282A34' rounded='xl' justifyContent='center'>
-            <HStack>
-              <Text style={{color:'gray'}}>USD</Text>
-              <MaterialIcons name="keyboard-arrow-down" size={13} color="gray" />
-            </HStack>
-          </Box>
-        </HStack>
-      </View>
-    );
-  }
   
   const TrendingView = () => {
     return (
